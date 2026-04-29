@@ -5,6 +5,8 @@
 #include "DrawDebugHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
@@ -15,41 +17,27 @@ Adoudge::Adoudge()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	capsule=CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	SetRootComponent(capsule);
+	
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	SetRootComponent(Capsule);
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Staticmesh"));
-	StaticMesh->SetupAttachment(capsule);
+	StaticMesh->SetupAttachment(Capsule);
 
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm->SetupAttachment(RootComponent);
+
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm);
 
 	
-	
 
-}
-
-void Adoudge::Move(const FInputActionValue& Value)
-{
-	const float NewLocation = Value.Get<float>();
-	if (Controller && (NewLocation != 0.f))
-	{
-		FVector Forward = GetActorForwardVector();
-		AddActorWorldOffset(Forward * NewLocation * 200.f * GetWorld()->GetDeltaSeconds());
-	}
 }
 
 // Called when the game starts or when spawned
 void Adoudge::BeginPlay()
 {
-	Super::BeginPlay();
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
-	{
-
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(Doudge, 0);
-		}
-	}
+	
 
 	
 }
@@ -81,11 +69,5 @@ void Adoudge::Tick(float DeltaTime)
 void Adoudge::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-		if (EnhancedInput)
-		{
-			EnhancedInput->BindAction(IA_Move, ETriggerEvent::Triggered, this, &Adoudge::Move);
-	     }
 }
 

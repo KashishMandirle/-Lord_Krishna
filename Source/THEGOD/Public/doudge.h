@@ -12,6 +12,8 @@ class UCapsuleComponent;
 class UInputMappingContext;
 class UInputAction;
 class UInputMappingContext;
+class USpringArmComponent;
+class UCameraComponent;
 UCLASS()
 class THEGOD_API Adoudge : public APawn
 {
@@ -28,19 +30,20 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	UStaticMeshComponent* StaticMesh;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	UCapsuleComponent* Capsule;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
-	UCapsuleComponent* capsule;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	USpringArmComponent* SpringArm;
 
-	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Input")
-	UInputMappingContext* Doudge;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UCameraComponent* Camera;
+	
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
-	UInputAction* IA_Move;
-
-	void Move(const FInputActionValue& Value);
+	
 
 public:	
 	float Updown;

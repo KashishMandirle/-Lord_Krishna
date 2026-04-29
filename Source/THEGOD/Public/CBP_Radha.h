@@ -4,44 +4,38 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "InputAction.h"
-#include "Lord_krishna.generated.h"
+#include "CBP_Radha.generated.h"
 
-class USpringArmComponent;
 class UCameraComponent;
-class UInputMappingContext;
-class UInputAction;
+class USpringArmComponent;
 
 UCLASS()
-class THEGOD_API ALord_krishna : public ACharacter
+class THEGOD_API ACBP_Radha : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	ALord_krishna();
+	ACBP_Radha();
 
+	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+   
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* SpringArm;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCameraComponent* Camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inputs")
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
-	UInputMappingContext* LordMappingComtext;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
-	UInputAction* Inputs;
-
-	void Move(const FInputActionValue& Value);
-
+	
+	
 };

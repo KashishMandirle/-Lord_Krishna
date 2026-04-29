@@ -51,9 +51,9 @@ void ALord_krishna::Move(const FInputActionValue& Value)
 	const FRotator YaWRotation (0.f, Rotation.Yaw, 0.f);
 
 	const FVector ForwardVector = FRotationMatrix(YaWRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(ForwardVector, MovementVector.Y);
+	AddMovementInput(ForwardVector, MovementVector.X);
 	const FVector Right = FRotationMatrix(YaWRotation).GetUnitAxis(EAxis::Y);	
-	AddMovementInput(Right, MovementVector.X);
+	AddMovementInput(Right, MovementVector.Y);
 
 	
 
